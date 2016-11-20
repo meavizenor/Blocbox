@@ -1,90 +1,88 @@
-/*
- * Dropit v1.1.0
- * http://dev7studios.com/dropit
- *
- * Copyright 2012, Dev7studios
- * Free to use and abuse under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
- */
-
-/* These styles assume you are using ul and li */
-.dropit {
-    list-style: none;
-	padding: 0;
-	margin: 15px 0 0;
-    float: right;
-    display: inline-block;
-}
-.dropit .dropit-trigger { position: relative; }
-.dropit .dropit-submenu {
-    position: absolute;
-    top: 100%;
-    right: 0; /* dropdown left or right */
-    z-index: 1000;
-    display: none;
-    min-width: 100px;
-    list-style: none;
-	padding: 20px;
-	margin: 20px 0 0;
-}
-.dropit-inverse.dropit .dropit-submenu {
-    position: absolute;
-    top: -140px;
-    right: 0; /* dropdown left or right */
-    z-index: 1000;
-    display: none;
-    min-width: 120px;
-    list-style: none;
-    padding: 20px;
-    margin: 20px 0 0;
-}
-.dropit .dropit-open .dropit-submenu { 
-    display: block;
-    background: #FFFFFF;
-    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.30);
-    border-radius: 4px;
-}
-.dropit-inverse.dropit .dropit-open .dropit-submenu { 
-    display: block;
-    background: #FFFFFF;
-    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.30);
-    border-radius: 4px;
-}
-.dropit .dropit-open .dropit-submenu:after {
-    content: " ";
-    position: absolute;
-    border-style: solid;
-    border-width: 0 8px 8px;
-    border-color: #FFFFFF transparent;
-    display: block;
-    width: 0;
-    z-index: 1;
-    top: -8px;
-    right: 10px;
-}
-.dropit-inverse.dropit .dropit-open .dropit-submenu:after {
-    content: " ";
-    position: absolute;
-    border-style: solid;
-    border-width: 0 8px 8px;
-    border-color: #FFFFFF transparent;
-    display: block;
-    width: 0;
-    z-index: 1;
-    top: 100%;
-    right: 10px;
-    transform: rotate(180deg);
-}
-.dropit .dropit-open .dropit-submenu li {
-    display: block;
-    margin-bottom: 20px;
-}
- .dropit .dropit-open .dropit-submenu li:last-child {
-    margin-bottom: 0px;
-}
- .dropit .dropit-open .dropit-submenu li a {
-    color:#34495E;
-    text-decoration: none;
-    font-family: "Palanquin", Helvetica, Arial, sans-serif;
-    font-weight:100;
-}
+-;(function($) {
+-
+-    $.fn.dropit = function(method) {
+-
+-        var methods = {
+-
+-            init : function(options) {
+-                this.dropit.settings = $.extend({}, this.dropit.defaults, options);
+-                return this.each(function() {
+-                    var $el = $(this),
+-                         el = this,
+-                         settings = $.fn.dropit.settings;
+-
+-                    // Hide initial submenus
+-                    $el.addClass('dropit')
+-                    .find('>'+ settings.triggerParentEl +':has('+ settings.submenuEl +')').addClass('dropit-trigger')
+-                    .find(settings.submenuEl).addClass('dropit-submenu').hide();
+-
+-                    // Open on click
+-                    $el.off(settings.action).on(settings.action, settings.triggerParentEl +':has('+ settings.submenuEl +') > '+ settings.triggerEl +'', function(){
+-                        // Close click menu's if clicked again
+-                        if(settings.action == 'click' && $(this).parents(settings.triggerParentEl).hasClass('dropit-open')){
+-                            settings.beforeHide.call(this);
+-                            $(this).parents(settings.triggerParentEl).removeClass('dropit-open').find(settings.submenuEl).hide();
+-                            settings.afterHide.call(this);
+-                            return false;
+-                        }
+-
+-                        // Hide open menus
+-                        settings.beforeHide.call(this);
+-                        $('.dropit-open').removeClass('dropit-open').find('.dropit-submenu').hide();
+-                        settings.afterHide.call(this);
+-
+-                        // Open this menu
+-                        settings.beforeShow.call(this);
+-                        $(this).parents(settings.triggerParentEl).addClass('dropit-open').find(settings.submenuEl).show();
+-                        settings.afterShow.call(this);
+-
+-                        return false;
+-                    });
+-
+-                    // Close if outside click
+-                    $(document).on('click', function(){
+-                        settings.beforeHide.call(this);
+-                        $('.dropit-open').removeClass('dropit-open').find('.dropit-submenu').hide();
+-                        settings.afterHide.call(this);
+-                    });
+-
+-                    // If hover
+-                    if(settings.action == 'mouseenter'){
+-                        $el.on('mouseleave', '.dropit-open', function(){
+-                            settings.beforeHide.call(this);
+-                            $(this).removeClass('dropit-open').find(settings.submenuEl).hide();
+-                            settings.afterHide.call(this);
+-                        });
+-                    }
+-
+-                    settings.afterLoad.call(this);
+-                });
+-            }
+-
+-        };
+-
+-        if (methods[method]) {
+-            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+-        } else if (typeof method === 'object' || !method) {
+-            return methods.init.apply(this, arguments);
+-        } else {
+-            $.error( 'Method "' +  method + '" does not exist in dropit plugin!');
+-        }
+-
+-    };
+-
+-    $.fn.dropit.defaults = {
+-        action: 'click', // The open action for the trigger
+-        submenuEl: 'ul', // The submenu element
+-        triggerEl: 'a', // The trigger element
+-        triggerParentEl: 'li', // The trigger parent element
+-        afterLoad: function(){}, // Triggers when plugin has loaded
+-        beforeShow: function(){}, // Triggers before submenu is shown
+-        afterShow: function(){}, // Triggers after submenu is shown
+-        beforeHide: function(){}, // Triggers before submenu is hidden
+-        afterHide: function(){} // Triggers before submenu is hidden
+-    };
+-
+-    $.fn.dropit.settings = {};
+-
+-})(jQuery);
