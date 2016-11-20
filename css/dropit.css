@@ -1,3 +1,20 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Gist
+ @meavizenor
+ Watch 2
+  Star 0
+  Fork 1 pdshetley/Blocbox
+ Code  Issues 0  Pull requests 0  Projects 0  Wiki  Pulse  Graphs
+Branch: gh-pages Find file Copy pathBlocbox/css/dropit.css
+4ea3492  on Sep 9, 2015
+@pdshetley pdshetley revised code
+1 contributor
+RawBlameHistory     
+Executable File  92 lines (89 sloc)  2.08 KB
 /*
  * Dropit v1.1.0
  * http://dev7studios.com/dropit
@@ -25,37 +42,69 @@
     min-width: 100px;
     list-style: none;
 	padding: 20px;
-	margin: 20 0 0;
+	margin: 20px 0 0;
+}
+.dropit-inverse.dropit .dropit-submenu {
+    position: absolute;
+    top: -140px;
+    right: 0; /* dropdown left or right */
+    z-index: 1000;
+    display: none;
+    min-width: 120px;
+    list-style: none;
+    padding: 20px;
+    margin: 20px 0 0;
 }
 .dropit .dropit-open .dropit-submenu { 
-    display: block; 
-    background-color: #FFFFFF;
-    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0,30);
-border-radius: 4px;
+    display: block;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.30);
+    border-radius: 4px;
+}
+.dropit-inverse.dropit .dropit-open .dropit-submenu { 
+    display: block;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.30);
+    border-radius: 4px;
+}
+.dropit .dropit-open .dropit-submenu:after {
+    content: " ";
+    position: absolute;
+    border-style: solid;
+    border-width: 0 8px 8px;
+    border-color: #FFFFFF transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+    top: -8px;
+    right: 10px;
+}
+.dropit-inverse.dropit .dropit-open .dropit-submenu:after {
+    content: " ";
+    position: absolute;
+    border-style: solid;
+    border-width: 0 8px 8px;
+    border-color: #FFFFFF transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+    top: 100%;
+    right: 10px;
+    transform: rotate(180deg);
+}
+.dropit .dropit-open .dropit-submenu li {
+    display: block;
+    margin-bottom: 20px;
+}
+ .dropit .dropit-open .dropit-submenu li:last-child {
+    margin-bottom: 0px;
+}
+ .dropit .dropit-open .dropit-submenu li a {
+    color:#34495E;
+    text-decoration: none;
+    font-family: "Palanquin", Helvetica, Arial, sans-serif;
+    font-weight:100;
 }
 
-.dropit .dropit-open .dropit-submenu:after {
-  content: " ";
-  position: absolute;
-  border-style: solid;
-  border-width: 0 8px 8px;
-  border-color: #FFFFFF transparent;
-  display: block;
-  width: 0;
-  z-index: 1;
-  top: -8px;
-  right: 10px;
- }
- .dropit .dropit-open .dropit-submenu li {
-  display: block;
-  margin-bottom: 20px;
- }
- .dropit .dropit-open .dropit-submenu li:last-child {
-  margin-bottom: 0px;
- }
- .dropit .dropit-open .dropit-submenu li a {
-  color:#34495E;
-  text-decoration: none;
-  font-family: "Montserrat", Helvetica, Arial, sans-serif;
-  font-weight:100;
- }
+Contact GitHub API Training Shop Blog About
+© 2016 GitHub, Inc. Terms Privacy Security Status Help
